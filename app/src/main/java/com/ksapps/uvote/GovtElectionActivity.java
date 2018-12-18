@@ -26,6 +26,7 @@ public class GovtElectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent GovtElectToTimeSlot=new Intent(GovtElectionActivity.this,TimeSlotActivity.class);
+                startActivity(GovtElectToTimeSlot);
             }
         });
 
@@ -33,6 +34,7 @@ public class GovtElectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent GovtElectToCandInfo=new Intent(GovtElectionActivity.this,CandInfoActivity.class);
+                startActivity(GovtElectToCandInfo);
             }
         });
 
@@ -40,6 +42,7 @@ public class GovtElectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent GovtElectToVote=new Intent(GovtElectionActivity.this,GovtVoteActivity.class);
+                startActivity(GovtElectToVote);
             }
         });
 
@@ -47,6 +50,7 @@ public class GovtElectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent GovtElectToResult=new Intent(GovtElectionActivity.this,GovtResultActivity.class);
+                startActivity(GovtElectToResult);
             }
         });
 
@@ -54,6 +58,7 @@ public class GovtElectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent GovtElectToHelp=new Intent(GovtElectionActivity.this,HelpActivity.class);
+                startActivity(GovtElectToHelp);
             }
         });
 
