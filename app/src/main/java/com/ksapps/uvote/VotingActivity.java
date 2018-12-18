@@ -105,18 +105,15 @@ public class VotingActivity extends AppCompatActivity {
                                     if (compareResult1 < 0 || compareResult2 > 0) {
                                         Toast.makeText(VotingActivity.this, "Cannot enter room", Toast.LENGTH_SHORT).show();
                                         return;
-                                    } else if (compareResult1 > 0 && compareResult2 < 0) {
+                                    } else if (compareResult1 >= 0 && compareResult2 <= 0) {
                                         Toast.makeText(VotingActivity.this, "Success", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Log.e("Errorr", "1 is equals than 2");
+
                                     }
                                 } catch (ParseException e) {
                                     Log.e("Errorr",e.toString());
                                     e.printStackTrace();
                                 }
-                                Log.e("Errorr", currentDateandTime);
-
-
                                 //if(dataSnapshot.child(roomId).child("sTime").getValue())
                                 if (!dataSnapshot.child(roomId).child("hasVoted").child(user.getDisplayName()).getValue().toString().equals("1")) {
                                     tvTitle.setText(dataSnapshot.child(roomId).child("title").getValue().toString());

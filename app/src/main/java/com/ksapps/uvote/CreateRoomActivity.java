@@ -115,10 +115,8 @@ public class CreateRoomActivity extends AppCompatActivity implements View.OnClic
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
                                               int minute) {
-                            sTime = String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute);
                             try {
                                 inTime = sdf.parse(sTime);
-                                Log.e("Errorr", Boolean.toString(eTime == null));
                                 if (!(eTime == null)) {
                                     dateDelta = inTime.compareTo(outTime);
                                     switch (dateDelta) {
@@ -129,6 +127,7 @@ public class CreateRoomActivity extends AppCompatActivity implements View.OnClic
                                             Toast.makeText(CreateRoomActivity.this, "Please enter proper start time", Toast.LENGTH_SHORT).show();
                                             break;
                                         case -1:
+                                            sTime = String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute);
                                             txtTime1.setText(sTime);
                                             break;
                                     }
@@ -179,6 +178,7 @@ public class CreateRoomActivity extends AppCompatActivity implements View.OnClic
                                             Toast.makeText(CreateRoomActivity.this, "Please enter proper end time", Toast.LENGTH_SHORT).show();
                                             break;
                                         case -1:
+
                                             txtTime2.setText(eTime);
                                             break;
                                     }

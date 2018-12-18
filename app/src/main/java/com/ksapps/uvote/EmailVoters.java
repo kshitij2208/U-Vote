@@ -2,7 +2,6 @@ package com.ksapps.uvote;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -109,7 +108,7 @@ public class EmailVoters extends AppCompatActivity {
                                 SendEmail sm = new SendEmail(EmailVoters.this, email, subject, message);
                                 sm.execute();
                             }
-                            Intent i = new Intent(EmailVoters.this, MainActivity.class);
+                            Intent i = new Intent(EmailVoters.this, PrivateElectionActivity.class);
                             startActivity(i);
                         }
                     });
