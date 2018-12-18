@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class PrivateElectionActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
@@ -49,7 +49,7 @@ public class PrivateElectionActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null) {
-                    startActivity(new Intent(PrivateElectionActivity.this, LoginActivity.class));
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     finish();
                 }
             }
@@ -58,7 +58,7 @@ public class PrivateElectionActivity extends AppCompatActivity {
         btnVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(PrivateElectionActivity.this, VotingActivity.class);
+                Intent i = new Intent(MainActivity.this, VotingActivity.class);
                 startActivity(i);
             }
         });
@@ -66,7 +66,7 @@ public class PrivateElectionActivity extends AppCompatActivity {
         btnCreateRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(PrivateElectionActivity.this, CreateRoomActivity.class);
+                Intent i = new Intent(MainActivity.this, CreateRoomActivity.class);
                 startActivity(i);
             }
         });
@@ -112,7 +112,7 @@ public class PrivateElectionActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.sign_out) {
             AuthUI.getInstance()
-                    .signOut(PrivateElectionActivity.this)
+                    .signOut(MainActivity.this)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -123,7 +123,7 @@ public class PrivateElectionActivity extends AppCompatActivity {
                     });
         }
         if (item.getItemId() == R.id.settings) {
-            Intent i = new Intent(PrivateElectionActivity.this, SettingsActivity.class);
+            Intent i = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(i);
         }
         return super.onOptionsItemSelected(item);

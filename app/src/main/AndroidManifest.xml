@@ -18,11 +18,10 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <service android:name=".CheckInternetService" />
-
-        <activity android:name=".PrivateElectionActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -36,6 +35,8 @@
         <activity android:name=".EmailVoters" />
         <activity android:name=".BaseActivity"></activity>
         <activity android:name=".MainPageActivity"></activity>
+        <activity android:name=".GovtElectionActivity"></activity>
+
     </application>
 
 </manifest>
