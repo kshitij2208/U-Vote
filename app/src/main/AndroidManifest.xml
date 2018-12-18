@@ -35,9 +35,8 @@
         <activity android:name=".CreateRoomActivity" />
         <activity android:name=".AddCandidates" />
         <activity android:name=".EmailVoters" />
-        <activity android:name=".BaseActivity">
-
-        </activity>
+        <activity android:name=".BaseActivity"></activity>
+        <activity android:name=".GovtElectionActivity"></activity>
     </application>
 
 </manifest>
