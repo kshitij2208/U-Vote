@@ -179,7 +179,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser() {
-        Intent loginIntent = new Intent(LoginActivity.this, PrivateElectionActivity.class);
+        Intent loginIntent = new Intent(LoginActivity.this, MainPageActivity.class);
         startActivity(loginIntent);
         finish();
     }
