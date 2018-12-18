@@ -19,7 +19,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <service android:name=".CheckInternetService" />
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".PrivateElectionActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,9 +35,8 @@
         <activity android:name=".CreateRoomActivity" />
         <activity android:name=".AddCandidates" />
         <activity android:name=".EmailVoters" />
-        <activity android:name=".BaseActivity">
-
-        </activity>
+        <activity android:name=".BaseActivity"></activity>
+        <activity android:name=".MainPageActivity"></activity>
     </application>
 
 </manifest>
