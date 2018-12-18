@@ -91,7 +91,7 @@ public class CreateRoomActivity extends AppCompatActivity implements View.OnClic
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
 
-                            date = (year+ "-"+ dayOfMonth + "-" + (monthOfYear + 1));
+                            date = (year+ "-"+  (monthOfYear + 1) + "-" + dayOfMonth);
                             txtDate.setText(date);
 
                         }
