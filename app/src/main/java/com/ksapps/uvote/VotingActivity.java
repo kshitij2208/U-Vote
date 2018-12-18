@@ -166,8 +166,10 @@ public class VotingActivity extends AppCompatActivity {
                     });
                 }
             });
-        } else
-            setContentView(R.layout.no_internet);
+        } else {
+            Intent i = new Intent(VotingActivity.this, BaseActivity.class);
+            startActivity(i);
+        }
 
     }
 

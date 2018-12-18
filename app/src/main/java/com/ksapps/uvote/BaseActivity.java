@@ -27,7 +27,7 @@ import java.util.Date;
 
 public class BaseActivity extends AppCompatActivity {
     public ProgressDialog mProgressDialog;
-    private Button button3;
+    private Button btnRetry;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
@@ -35,44 +35,33 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference().child("room");
-        myRef.addValueEventListener(new ValueEventListener() {
+
+        btnRetry =(Button)findViewById(R.id.btnRetry);
+
+
+        btnRetry.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("6513")) {
-                    Date currentTime = Calendar.getInstance().getTime();
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    String currentDateandTime = sdf.format(currentTime);
-                    String compareTime = dataSnapshot.child("6513").child("sTime").getValue().toString()+":00";
-                    Log.e("Errorr",compareTime+" Hello");
-                    Date d1, d2;
-                    try {
-                        d1 = sdf.parse(currentDateandTime);
-                        d2 = sdf.parse(compareTime);
-                        int compareResult = d1.compareTo(d2);
-                        Log.e("Errorr", "Hello "+compareResult);
-                        if (compareResult > 0) {
-                            Log.e("Errorr", "1 is younger than 2");
-                        } else if (compareResult < 0) {
-                            Log.e("Errorr", "2 is younger than 1");
-                        } else {
-                            Log.e("Errorr", "1 is equals than 2");
-                        }
-                    } catch (ParseException e) {
-                        Log.e("Errorr",e.toString());
-                        e.printStackTrace();
-                    }
-                    Log.e("Errorr", currentDateandTime);
+            public void onClick(View v) {
+                if(isOnline()){
+                    finish();
+                }else{
+
                 }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
+    }
+
+    public Boolean isOnline() {
+        try {
+            Process p1 = java.lang.Runtime.getRuntime().exec("ping -c 1 www.google.com");
+            int returnVal = p1.waitFor();
+            boolean reachable = (returnVal == 0);
+            return reachable;
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return false;
     }
 }
