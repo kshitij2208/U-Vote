@@ -97,6 +97,8 @@ public class VotingActivity extends AppCompatActivity {
                                     d2 = sdf.parse(startTime);
                                     d3 = sdf.parse(endTime);
                                     Log.e("Errorr",d1.toString()+" ");
+                                    Log.e("Errorr",d2.toString()+" ");
+                                    Log.e("Errorr",d3.toString()+" ");
                                     int compareResult1 = d1.compareTo(d2);
                                     int compareResult2 = d1.compareTo(d3);
                                     Log.e("Errorr",compareResult1+" "+compareResult2);
