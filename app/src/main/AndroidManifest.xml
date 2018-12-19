@@ -35,8 +35,12 @@
         <activity android:name=".CreateRoomActivity" />
         <activity android:name=".AddCandidates" />
         <activity android:name=".EmailVoters" />
-        <activity android:name=".BaseActivity"></activity>
-        <activity android:name=".MainPageActivity"></activity>
+        <activity android:name=".BaseActivity" />
+        <activity android:name=".MainPageActivity" />
+        <activity android:name=".ImortantDatesActivity" />
+        <activity android:name=".HelpActivity" />
+        <activity android:name=".FaqActivity" />
+        <activity android:name=".ChatBotActivity"></activity>
     </application>
 
 </manifest>

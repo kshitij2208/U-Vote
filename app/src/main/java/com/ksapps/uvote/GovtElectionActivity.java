@@ -1,6 +1,5 @@
 package com.ksapps.uvote;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,45 +21,45 @@ public class GovtElectionActivity extends AppCompatActivity {
         btnResult=(Button)findViewById(R.id.gBtnResult);
         btnHelp=(Button)findViewById((R.id.gBtnHelp));
 
-        btnTimeSlot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent GovtElectToTimeSlot=new Intent(GovtElectionActivity.this,TimeSlotActivity.class);
-                startActivity(GovtElectToTimeSlot);
-            }
-        });
-
-        btnCandInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent GovtElectToCandInfo=new Intent(GovtElectionActivity.this,CandInfoActivity.class);
-                startActivity(GovtElectToCandInfo);
-            }
-        });
-
-        btnVote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent GovtElectToVote=new Intent(GovtElectionActivity.this,GovtVoteActivity.class);
-                startActivity(GovtElectToVote);
-            }
-        });
-
-        btnResult.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent GovtElectToResult=new Intent(GovtElectionActivity.this,GovtResultActivity.class);
-                startActivity(GovtElectToResult);
-            }
-        });
-
-        btnHelp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent GovtElectToHelp=new Intent(GovtElectionActivity.this,HelpActivity.class);
-                startActivity(GovtElectToHelp);
-            }
-        });
+//        btnTimeSlot.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent GovtElectToTimeSlot=new Intent(GovtElectionActivity.this,TimeSlotActivity.class);
+//                startActivity(GovtElectToTimeSlot);
+//            }
+//        });
+//
+//        btnCandInfo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent GovtElectToCandInfo=new Intent(GovtElectionActivity.this,CandInfoActivity.class);
+//                startActivity(GovtElectToCandInfo);
+//            }
+//        });
+//
+//        btnVote.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent GovtElectToVote=new Intent(GovtElectionActivity.this,GovtVoteActivity.class);
+//                startActivity(GovtElectToVote);
+//            }
+//        });
+//
+//        btnResult.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent GovtElectToResult=new Intent(GovtElectionActivity.this,GovtResultActivity.class);
+//                startActivity(GovtElectToResult);
+//            }
+//        });
+//
+//        btnHelp.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent GovtElectToHelp=new Intent(GovtElectionActivity.this,ImortantDatesActivity.class);
+//                startActivity(GovtElectToHelp);
+//            }
+//        });
 
     }
 
