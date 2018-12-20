@@ -21,11 +21,7 @@
 
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".ResultsActivity" />
         <activity android:name=".ResetActivity" />
@@ -35,8 +31,17 @@
         <activity android:name=".CreateRoomActivity" />
         <activity android:name=".AddCandidates" />
         <activity android:name=".EmailVoters" />
-        <activity android:name=".BaseActivity"></activity>
-        <activity android:name=".GovtElectionActivity"></activity>
+        <activity android:name=".BaseActivity" />
+        <activity android:name=".GovtElectionActivity" />
+        <activity android:name=".TimeSlotActivity" />
+        <activity android:name=".CandInfoActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".InfoActivity"></activity>
     </application>
 
 </manifest>

@@ -37,30 +37,30 @@ public class GovtElectionActivity extends AppCompatActivity {
                 startActivity(GovtElectToCandInfo);
             }
         });
-
-        btnVote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent GovtElectToVote=new Intent(GovtElectionActivity.this,GovtVoteActivity.class);
-                startActivity(GovtElectToVote);
-            }
-        });
-
-        btnResult.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent GovtElectToResult=new Intent(GovtElectionActivity.this,GovtResultActivity.class);
-                startActivity(GovtElectToResult);
-            }
-        });
-
-        btnHelp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent GovtElectToHelp=new Intent(GovtElectionActivity.this,HelpActivity.class);
-                startActivity(GovtElectToHelp);
-            }
-        });
+//
+//        btnVote.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent GovtElectToVote=new Intent(GovtElectionActivity.this, GovtVoteActivity.class);
+//                startActivity(GovtElectToVote);
+//            }
+//        });
+//
+////        btnResult.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View v) {
+////                Intent GovtElectToResult=new Intent(GovtElectionActivity.this, GovtResultActivity.class);
+////                startActivity(GovtElectToResult);
+////            }
+////        });
+////
+////        btnHelp.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View v) {
+////                Intent GovtElectToHelp=new Intent(GovtElectionActivity.this, HelpActivity.class);
+////                startActivity(GovtElectToHelp);
+////            }
+////        });
 
     }
 
