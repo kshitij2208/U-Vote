@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#00bcd4</color>
     <color name="colorPrimaryDark">#0097a7</color>
-    <color name="colorAccent">#00bf00</color>
+    <color name="colorAccent">#f2fe71</color>
 
     <color name="bg_login">#26ae90</color>
     <color name="bg_register">#2e3237</color>
@@ -17,8 +17,4 @@
     <color name="btn_login_bg">#eceef1</color>
     <color name="lbl_name">#333333</color>
     <color name="btn_logut_bg">#ff6861</color>
-    <color name="colorWhite">#EDF6F5</color>
-    <color name="colorHighlight">#82923A</color>
-    <color name="colorBlack">#000000</color>
-    <color name="colorBrown">#443129</color>
 </resources>

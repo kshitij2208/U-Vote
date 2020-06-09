@@ -1,18 +1,12 @@
 package com.ksapps.uvote;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,165 +18,266 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
+
+import static java.lang.Thread.sleep;
 
 public class VotingActivity extends AppCompatActivity {
 
+    private Button btnB1, btnB2, btnB3, btnConfirm;
+    private TextView tvResults, tvThank, tvWard;
     private FirebaseAuth auth;
     private FirebaseDatabase database;
-    private DatabaseReference myRef;
+    private DatabaseReference myRef, myRef1, myRef2;
     private FirebaseUser user;
-    LinearLayout container;
-    private EditText etRoomId;
-    private Button btnSubmit;
-    String roomId, number;
-    ArrayList<String> arrayList;
-    TextView tvTitle;
+    private int value, count;
+    private String ward, candidate;
+    private ArrayList<String> arrayList;
+    private ArrayList<Integer> countList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (isOnline()) {
-            setContentView(R.layout.activity_voting);
+        setContentView(R.layout.activity_voting);
 
-            etRoomId = (EditText) findViewById(R.id.etRoomId);
-            btnSubmit = (Button) findViewById(R.id.btnSubmit);
-            container = (LinearLayout) findViewById(R.id.container);
-            tvTitle = (TextView) findViewById(R.id.title);
-            auth = FirebaseAuth.getInstance();
-            database = FirebaseDatabase.getInstance();
-            myRef = database.getReference().child("room");
+        btnB1 = (Button) findViewById(R.id.btnB1);
+        btnB2 = (Button) findViewById(R.id.btnB2);
+        btnB3 = (Button) findViewById(R.id.btnB3);
+        btnConfirm = (Button) findViewById(R.id.btnConfirm);
+        tvResults = (TextView) findViewById(R.id.tvResults);
+        tvThank = (TextView) findViewById(R.id.tvThank);
+        tvWard = (TextView) findViewById(R.id.tvWard);
 
-            final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference().child("voters");
+        myRef1 = database.getReference().child("candidates");
+        myRef2 = database.getReference().child("count");
+        user = auth.getCurrentUser();
+        arrayList = new ArrayList<>();
+        countList = new ArrayList<>();
 
-            arrayList = new ArrayList<>();
+        myRef.child(user.getDisplayName()).child("voted").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                try {
+                    if (snapshot.getValue() != null) {
+                        try {
+                            value = Integer.parseInt(snapshot.getValue().toString());
+                            if (value == 0) {
+                                btnB1.setEnabled(true);
+                                btnB2.setEnabled(true);
+                                btnB3.setEnabled(true);
+                                tvThank.setVisibility(View.INVISIBLE);
+                            } else {
+                                btnB1.setEnabled(false);
+                                btnB2.setEnabled(false);
+                                btnB3.setEnabled(false);
+                                tvThank.setVisibility(View.VISIBLE);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Log.e("TAG", " it's null.");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
-            btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                @Override
-                public void onClick(View v) {
-                    if (TextUtils.isEmpty(etRoomId.getText().toString())) {
-                        Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
-                        return;
+            }
+        });
+
+        myRef.child(user.getDisplayName()).child("ward").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ward = dataSnapshot.getValue().toString();
+                tvWard.setText("Ward : " + ward);
+                Log.e("U-Vote", "My ward is " + ward);
+                myRef1.child(ward).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //Log.e("U-Vote",Long.toString(dataSnapshot.getChildren()));
+                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+                            arrayList.add(child.getValue().toString());
+                            //String count_no=dataSnapshot.child(child.getValue().toString()).getValue().toString();
+                            Log.e("U-Vote", child.getValue() + " my ocunt");
+                            //countList.add(Integer.parseInt(count_no));
+                        }
+                        for (int i = 0; i < arrayList.size(); i++) {
+                            myRef2.child(ward).child(arrayList.get(i)).
+                                    addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            Log.e("U-Vote", "Count " + dataSnapshot.getValue().toString());
+                                            countList.add(Integer.parseInt(dataSnapshot.getValue().toString()));
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+                        }
+                        Log.e("U-Vote", arrayList.toString());
+                        btnB1.setText(arrayList.get(0));
+                        btnB2.setText(arrayList.get(1));
+                        btnB3.setText(arrayList.get(2));
+                        doVote();
                     }
 
-                    roomId = etRoomId.getText().toString();
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    myRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.hasChild(roomId)) {
-                                if (!dataSnapshot.child(roomId).hasChild("hasVoted")) {
-                                    myRef.child(roomId).child("hasVoted").child(user.getDisplayName()).setValue("0");
-                                    return;
-                                }
+                    }
+                });
 
-                                Date currentTime = Calendar.getInstance().getTime();
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                String currentDateandTime = sdf.format(currentTime);
-                                Log.e("Errrorr",currentDateandTime);
-                                String startTime = dataSnapshot.child(roomId).child("sTime").getValue().toString()+":00";
-                                String endTime = dataSnapshot.child(roomId).child("eTime").getValue().toString()+":00";
-                                Date d1, d2;
-                                Date d3;
-                                try {
-                                    d1 = sdf.parse(currentDateandTime);
-                                    d2 = sdf.parse(startTime);
-                                    d3 = sdf.parse(endTime);
-                                    Log.e("Errorr",d1.toString()+" ");
-                                    Log.e("Errorr",d2.toString()+" ");
-                                    Log.e("Errorr",d3.toString()+" ");
-                                    int compareResult1 = d1.compareTo(d2);
-                                    int compareResult2 = d1.compareTo(d3);
-                                    Log.e("Errorr",compareResult1+" "+compareResult2);
-                                    if (compareResult1 < 0 || compareResult2 > 0) {
-                                        Toast.makeText(VotingActivity.this, "Cannot enter room", Toast.LENGTH_SHORT).show();
-                                        return;
-                                    } else if (compareResult1 >= 0 && compareResult2 <= 0) {
-                                        Toast.makeText(VotingActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                                    } else {
+            }
 
-                                    }
-                                } catch (ParseException e) {
-                                    Log.e("Errorr",e.toString());
-                                    e.printStackTrace();
-                                }
-                                //if(dataSnapshot.child(roomId).child("sTime").getValue())
-                                if (!dataSnapshot.child(roomId).child("hasVoted").child(user.getDisplayName()).getValue().toString().equals("1")) {
-                                    tvTitle.setText(dataSnapshot.child(roomId).child("title").getValue().toString());
-                                    HashMap<String, String> map = (HashMap<String, String>) dataSnapshot.child(roomId).child("candidates").getValue();
-                                    Iterator<String> itr = map.keySet().iterator();
-                                    while (itr.hasNext()) {
-                                        LayoutInflater layoutInflater =
-                                                (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                                        final View addView = layoutInflater.inflate(R.layout.button, null);
-                                        final Button buttonRemove = (Button) addView.findViewById(R.id.vote);
-                                        buttonRemove.setText(itr.next());
-                                        final View.OnClickListener thisListener = new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                Log.e("Errorr", buttonRemove.getText().toString());
-                                                number = dataSnapshot.child(roomId).child("candidates").child(buttonRemove.getText()
-                                                        .toString()).getValue().toString();
-                                                int num = Integer.parseInt(number);
-                                                myRef.child(roomId).child("candidates").child(buttonRemove.getText().toString()).setValue(num + 1);
-                                                myRef.child(roomId).child("hasVoted").child(user.getDisplayName()).setValue("1");
-                                                Toast.makeText(VotingActivity.this, "Your vote has been recorded", Toast.LENGTH_LONG).show();
-                                                Intent intent = new Intent(VotingActivity.this, ResultsActivity.class);
-                                                intent.putExtra("roomId", roomId);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        };
-                                        buttonRemove.setOnClickListener(thisListener);
-                                        container.addView(addView);
-                                        btnSubmit.setEnabled(false);
-                                    }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                } else {
-                                    Toast.makeText(VotingActivity.this, "You have already voted in this room", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(VotingActivity.this, ResultsActivity.class);
-                                    intent.putExtra("roomId", roomId);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            } else {
-                                Toast.makeText(VotingActivity.this, "No Such Room Exists", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                        }
+            }
+        });
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        }
-                    });
-                }
-            });
-        } else {
-            Intent i = new Intent(VotingActivity.this, BaseActivity.class);
-            startActivity(i);
-        }
+//        myRef.child(user.getDisplayName()).child("ward").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot snapshot) {
+//                try {
+//                    if (snapshot.getValue() != null) {
+//                        try {
+//                            ward = snapshot.getValue().toString();
+//                            btnB1
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    } else {
+//                        Log.e("TAG", " it's null.");
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
     }
 
-    public Boolean isOnline() {
-        try {
-            Process p1 = java.lang.Runtime.getRuntime().exec("ping -c 1 www.google.com");
-            int returnVal = p1.waitFor();
-            boolean reachable = (returnVal == 0);
-            return reachable;
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return false;
+    private void doVote() {
+        btnB1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnB1.setEnabled(false);
+                btnB2.setEnabled(false);
+                btnB3.setEnabled(false);
+
+                //Log.e("U-Vote",ward+" "+btnB3.getText().toString());
+
+                myRef = database.getReference().child("count").child(ward).child(btnB1.getText().toString());
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        count = Integer.parseInt(dataSnapshot.getValue().toString());
+                        Log.e("U-Vote", dataSnapshot.getValue().toString() + " count");
+                        candidate = btnB1.getText().toString();
+                        btnConfirm.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+        });
+
+        btnB2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnB1.setEnabled(false);
+                btnB2.setEnabled(false);
+                btnB3.setEnabled(false);
+
+                //Log.e("U-Vote",ward+" "+btnB3.getText().toString());
+
+                myRef = database.getReference().child("count").child(ward).child(btnB2.getText().toString());
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        count = Integer.parseInt(dataSnapshot.getValue().toString());
+                        Log.e("U-Vote", dataSnapshot.getValue().toString() + " count");
+                        candidate = btnB2.getText().toString();
+                        btnConfirm.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+        });
+
+        btnB3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnB1.setEnabled(false);
+                btnB2.setEnabled(false);
+                btnB3.setEnabled(false);
+
+                //Log.e("U-Vote",ward+" "+btnB3.getText().toString());
+
+                myRef = database.getReference().child("count").child(ward).child(btnB3.getText().toString());
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        count = Integer.parseInt(dataSnapshot.getValue().toString());
+                        Log.e("U-Vote", dataSnapshot.getValue().toString() + " count");
+                        candidate = btnB3.getText().toString();
+                        btnConfirm.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+        });
+
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count += 1;
+                database.getReference().child("count").child(ward).child(candidate).setValue(Integer.toString(count));
+                database.getReference().child("voters").child(user.getDisplayName()).child("voted").setValue("1");
+                btnConfirm.setEnabled(false);
+            }
+        });
+
+        tvResults.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(VotingActivity.this,ResultsActivity.class);
+                i.putExtra("countList",countList);
+                i.putExtra("arrayList",arrayList);
+                startActivity(i);
+            }
+        });
     }
 }

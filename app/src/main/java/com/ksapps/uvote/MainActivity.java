@@ -4,15 +4,12 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -25,12 +22,11 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private TextView tvWelcome;
-    private Button btnVote,btnCreateRoom;
+    private Button btnVote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (isOnline()) {
         setContentView(R.layout.activity_main);
 
         auth = FirebaseAuth.getInstance();
@@ -39,10 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
         tvWelcome = (TextView)findViewById(R.id.tvWelcome);
         btnVote = (Button)findViewById(R.id.btnVote);
-        btnCreateRoom = (Button)findViewById(R.id.btnRoom);
 
-        final FirebaseUser mUser = auth.getCurrentUser();
-        tvWelcome.setText("Welcome "+mUser.getDisplayName());
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        tvWelcome.setText("Welcome "+user.getDisplayName());
+
+        Log.e("U-Vote", user.getDisplayName() + " is user");
 
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -63,29 +61,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnCreateRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, CreateRoomActivity.class);
-                startActivity(i);
-            }
-        });
-        } else
-            setContentView(R.layout.no_internet);
-
-    }
-
-    public Boolean isOnline() {
-        try {
-            Process p1 = java.lang.Runtime.getRuntime().exec("ping -c 1 www.google.com");
-            int returnVal = p1.waitFor();
-            boolean reachable = (returnVal == 0);
-            return reachable;
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return false;
     }
 
     @Override
@@ -111,16 +86,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.sign_out) {
-            AuthUI.getInstance()
-                    .signOut(MainActivity.this)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                signOut();
-                            }
-                        }
-                    });
+            auth.signOut();
         }
         if (item.getItemId() == R.id.settings) {
             Intent i = new Intent(MainActivity.this, SettingsActivity.class);
@@ -128,10 +94,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private void signOut() {
-        Intent signOutIntent = new Intent(this, LoginActivity.class);
-        startActivity(signOutIntent);
-        finish();
-    }
 }
+
