@@ -31,8 +31,7 @@ In recent times there have been news of tampering of Voting machines, muscle pow
 ### Run the project in Android Studio ###
 
 * Import the project in Android Studio.
-* Make sure internet is available, Android build will download artifacts from internet
-* Sync the project.
-* Enable the Developer option in mobile and attach a mobile ,make sure you have to install USB drivers on your system.
-* RUN the project
-* if Mobile is not available then create a new Android virtual device from AVD manager and start the Virtual device
+* Make sure internet is available, Android build will download artifacts from internet.
+* Sync the project and enable the Developer option in mobile and attach a mobile , make sure you have to install USB drivers on your system.
+* Run the project.
+* If the mobile is not available then create a new Android virtual device from AVD manager and start the Virtual device.
