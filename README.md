@@ -2,8 +2,7 @@
 
 # Introduction #
 
-This application is basically used to vote to their favourite politician.this app will help user to give the vote to Hillary or Donald depends on their choice.
-In this application its special feature is their is no special requirements for the user to only american people can vote. Anyone in the world can vote to their favourite politician.
+In recent times there have been news of tampering of Voting machines, muscle power being used at the polling booths and a very low voting turnouts are one of the major drawbacks of our current voting system. Also the current voting system in India requires a lot of manpower and expenditure for its deployment. This has motivated us to develop this system. We also aim to aid private elections by developing a platform for voting for all types of elections.
 
 ### Features ###
 * Application provides voter registration/login before starting voting process.
@@ -20,14 +19,14 @@ In this application its special feature is their is no special requirements for 
 * 2 GB RAM minimum, 8 GB RAM recommended
 * 2 GB of available disk space minimum,
 * 4 GB Recommended (500 MB for IDE + 1.5 GB for Android SDK and emulator system image)
-* 1280 x 800 minimum screen resolution
 * Java Development Kit (JDK) 8
-* Android Studio 2.0 stable version 
-  - Download link : [Android studio with SDK](http://developer.android.com/intl/ja/sdk/index.html)
-* Android SDK Compiled version - 24
-* Minimum SDK version - 16
-* Gradle version - 2.2
+* Android Studio 2.0
 
+# API Used : 
+
+* *Aadhaar API Service* - For Aadhaar database, which is used for Face verification.
+* *FireBase Cloud Database* - for saving encrypted profile and voting information.
+* *Firebase MLKit* - for face detection and recognition service.
 ### Detailed Steps to setup ANDROID STUDIO ###
 
 ### Run the project in Android Studio ###
