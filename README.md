@@ -14,17 +14,6 @@ In this application its special feature is their is no special requirements for 
 * It stores encrypted voting details of user and sends it to cloud in encrypted form.
 * User can see their profile in the profile menu.
 
-* Initially user can see the Intro slider in which user can see how to use the application.
-* In this application user can register by using their phone number so that fake user can not vote.
-* Also user have to sign up before login in that user have to specify their email and name .
-* If user is already registered then user can login direct and maintain session.
-* After sign in user can vote to their favourite politician.
-* User can see their profile in the profile menu.
-* User can see the about menu in that user will get familiar with the app.
-* User can sign out by choosing sign out menu.
-* User can give the feedback about the app so that we can work on it.
-* App made in pure Material Design under proper guidelines
-
 ### System Requirement ###
 
 * Microsoft® Windows® 7/8/10 (or) Mac® OS X® 10.8.5 or higher
