@@ -1,6 +1,6 @@
 # U-Vote #
 
-# Introduction #
+## Introduction ##
 
 In recent times there have been news of tampering of Voting machines, muscle power being used at the polling booths and a very low voting turnouts are one of the major drawbacks of our current voting system. Also the current voting system in India requires a lot of manpower and expenditure for its deployment. This has motivated us to develop this system. We also aim to aid private elections by developing a platform for voting for all types of elections.
 
@@ -22,7 +22,7 @@ In recent times there have been news of tampering of Voting machines, muscle pow
 * Java Development Kit (JDK) 8
 * Android Studio 2.0
 
-# API Used : 
+### API Used : ###
 
 * *Aadhaar API Service* - For Aadhaar database, which is used for Face verification.
 * *FireBase Cloud Database* - for saving encrypted profile and voting information.
