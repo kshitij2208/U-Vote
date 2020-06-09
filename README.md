@@ -27,7 +27,6 @@ In recent times there have been news of tampering of Voting machines, muscle pow
 * *Aadhaar API Service* - For Aadhaar database, which is used for Face verification.
 * *FireBase Cloud Database* - for saving encrypted profile and voting information.
 * *Firebase MLKit* - for face detection and recognition service.
-### Detailed Steps to setup ANDROID STUDIO ###
 
 ### Run the project in Android Studio ###
 
